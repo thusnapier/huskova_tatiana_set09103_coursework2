@@ -4,5 +4,12 @@
  <h1>Welcome user!</h1>
  <br>
  <p>Click <a href ="/logout"> here </a> to log out.</p>
+ <br><br>
+ <h5>Your wall:</h5>
+ {% for post in posts %}
+   {{ post.auth }} <br>
+   {{ post.stat }} <br>
+ <br>
+ {% endfor %}
 
 {% endblock %}

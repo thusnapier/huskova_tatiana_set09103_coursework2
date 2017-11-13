@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session,
+flash, g
 from functools import wraps
 import sqlite3
 
 app = Flask(__name__)
 
 app.secret_key = "simon"
+app.database = "texts.db"
 
 #decorator that requires login before seeing the content
 def login_required(f):
@@ -24,7 +26,11 @@ def homepage():
 @app.route('/welcome')
 @login_required
 def welcome():
-  return render_template('logedin.html')
+  g.db = connect_db()
+  cur = g.db.execute('SELECT * FROM posts')
+  posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
+  g.db.close()
+  return render_template('logedin.html', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -45,6 +51,8 @@ def logout():
   flash('You were logged out from the pgae.')
   return redirect(url_for('homepage'))
 
+def connect_db():
+  return sqlite3.connect(app.database)
 
 
 if __name__ == "__main__":
