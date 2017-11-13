@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session,
-flash, g
+from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from functools import wraps
 import sqlite3
 
@@ -26,11 +25,11 @@ def homepage():
 @app.route('/welcome')
 @login_required
 def welcome():
-  g.db = connect_db()
-  cur = g.db.execute('SELECT * FROM posts')
-  posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
-  g.db.close()
-  return render_template('logedin.html', posts=posts)
+# g.db = connect_db()
+# cur = g.db.execute('SELECT * FROM posts')
+# posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
+# g.db.close()
+  return render_template('logedin.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
