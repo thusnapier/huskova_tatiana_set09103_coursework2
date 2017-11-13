@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from functools import wraps
+import sqlite3
 
 app = Flask(__name__)
 
@@ -43,6 +44,8 @@ def logout():
   session.pop('logged_in', None)
   flash('You were logged out from the pgae.')
   return redirect(url_for('homepage'))
+
+
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
