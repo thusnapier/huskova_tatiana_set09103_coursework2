@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Coursework2</title>
-    <link href="{{ url_for('static', filename='bootstrap.min.css') }}"
-    rel="stylesheet"/>    
-  </head>
-  <body>
-    <div class="container">
-      <h1>Welcome</h1>
-      <br>
-      <p>Click<a href="/login">here</a> to log in.</p>
-    </div>
-  </body>
-</html>
+{% extends "index.html" %}
+{% block content %}
+
+ <h1>Welcome</h1>
+ <br>
+ <p>Click<a href="/login"> here </a> to log in.</p>
+
+{% endblock %}
