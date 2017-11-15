@@ -47,7 +47,7 @@ def login():
 @login_required
 def logout():
   session.pop('logged_in', None)
-  flash('You were logged out from the pgae.')
+  flash('You were logged out from the page.')
   return redirect(url_for('homepage'))
 
 def connect_db():
