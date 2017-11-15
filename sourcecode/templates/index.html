@@ -4,8 +4,15 @@
     <title>Coursework2</title>
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}"
     rel="stylesheet"/>
+    <style>
+    div{
+      border: 2px solid #D2B4DE;
+      margin: 25px 50px 75px 100px;
+      background-color: rgba(215, 189, 226, 0.5);
+      }
+    </style>
   </head>
-  <body>
+  <body background="https://data.whicdn.com/images/163419196/original.jpg">
     <div class="container">
       
       {% block content %}{% endblock %}
