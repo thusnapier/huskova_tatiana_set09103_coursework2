@@ -1,14 +1,16 @@
 {% extends "index.html" %}
 {% block content %}
 
- <h2>Please, log in to your account.</h2>
+ <h2>Please, log in to your account to see the content.</h2>
  <br>
  <form action="" method="post">
   <input type="text" placeholder="Username" name="username" value="{{
   request.form.username }}">
   <br>
+  <br>
   <input type="password" placeholder="Password" name="password" value="{{
   request.form.password }}">
+  <br>
   <br>
   <input class="btn btn-default" type="submit" value="Login">
  </form>
