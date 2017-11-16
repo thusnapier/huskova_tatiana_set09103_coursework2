@@ -24,22 +24,19 @@ def login_required(f):
 def homepage():
   return render_template('base.html')
 
-@app.route('/welcome')
-@login_required
-def welcome():
-  #g.db = connect_db()
-  #cur = g.db.execute('SELECT * FROM posts')
-  #posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
-  #g.db.close()
-  return render_template('logedin.html')
-
-@app.route('/welcome', methods=['POST'])
+@app.route('/welcome', methods=['GET','POST'])
 @login_required
 def welcome_post():
-  text = request.form['text']
-  processed_text = text
-  return render_template('logedin.html', processed_text=processed_text)
-
+  if request.method == 'POST':
+    text = request.form['text']
+    processed_text = text
+    return render_template('logedin.html', processed_text=processed_text)
+  else:
+    #g.db = connect_db()
+    #cur = g.db.execute('SELECT * FROM posts')
+    #posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
+    #g.db.close()
+    return render_template('logedin.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
