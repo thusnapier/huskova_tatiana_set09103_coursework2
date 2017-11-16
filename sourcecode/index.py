@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from functools import wraps
 import sqlite3
+import models as dbHandler
 
 app = Flask(__name__)
 
 app.secret_key = "simon"
-app.database = "texts.db"
+#app.database = "texts.db"
+app.database = "users.db"
 
 #decorator that requires login before seeing the content
 def login_required(f):
@@ -25,13 +27,14 @@ def homepage():
 @app.route('/welcome')
 @login_required
 def welcome():
-# g.db = connect_db()
-# cur = g.db.execute('SELECT * FROM posts')
-# posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
-# g.db.close()
+  #g.db = connect_db()
+  #cur = g.db.execute('SELECT * FROM posts')
+  #posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
+  #g.db.close()
   return render_template('logedin.html')
 
 @app.route('/welcome', methods=['POST'])
+@login_required
 def welcome_post():
   text = request.form['text']
   processed_text = text
@@ -42,14 +45,24 @@ def welcome_post():
 def login():
   error = None
   if request.method == 'POST':
-    if request.form['username'] != 'cscott' or request.form['password'] != 'scotty':
-      error = 'Invalid login details. Please try again.'
-    else:
-      session['logged_in'] = True
-      flash('You were successfully logged in!') 
+  #Here connect to database
+  #Set variables to values passed in post
+  #Compare variables to database
+    #if request.form['username'] != 'cscott' or request.form['password'] != 'scotty':
+    username = request.form['username']
+    password = request.form['password']
+    user = dbHandler.getUser(username, password)
+    if user==True:
       return redirect(url_for('welcome'))
-  return render_template('login.html', error=error)
-
+    else:
+      return redirect(url_for('login'))
+  else:
+   # session['logged_in'] = True
+   # flash('You were successfully logged in!') 
+   # return redirect(url_for('welcome'))
+    error = 'Invalid login details. Please try again.'
+    return render_template('login.html')
+     
 @app.route('/logout')
 @login_required
 def logout():
