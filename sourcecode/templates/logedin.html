@@ -6,11 +6,13 @@
  <h3>Share your story with the world and see what others shared with you.</h3>
  <br><br>
  <form method="POST">
+   <input type=text name="insname" placeholder="Whats your name?">
    <input type=text name="text" placeholder="Whats on your mind?">
    <input class="btn" type="submit" value="Post!">
  </form>
  <br><br>
  <h4>Posts:</h4>
+   {{ inserted_name }}
    {{ processed_text }} <br>
  {% for post in posts %}
    {{ post.auth }} <br>

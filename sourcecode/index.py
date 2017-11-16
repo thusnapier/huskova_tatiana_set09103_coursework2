@@ -6,8 +6,8 @@ import models as dbHandler
 app = Flask(__name__)
 
 app.secret_key = "simon"
-#app.database = "texts.db"
-app.database = "users.db"
+app.database1 = "texts.db"
+app.database2 = "users.db"
 
 #decorator that requires login before seeing the content
 def login_required(f):
@@ -26,12 +26,15 @@ def homepage():
 
 @app.route('/welcome', methods=['GET','POST'])
 @login_required
-def welcome_post():
+def welcome():
   if request.method == 'POST':
     text = request.form['text']
+    inserted_name = insname
     processed_text = text
-    return render_template('logedin.html', processed_text=processed_text)
+    return render_template('logedin.html', processed_text=processed_text,
+    inserted_name=inserted_name)
   else:
+    session['logged_in']=True
     #g.db = connect_db()
     #cur = g.db.execute('SELECT * FROM posts')
     #posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
@@ -50,12 +53,17 @@ def login():
     password = request.form['password']
     user = dbHandler.getUser(username, password)
     if user==True:
+      session['logged_in'] = True
       return redirect(url_for('welcome'))
     else:
-      return redirect(url_for('login'))
+      session['logged_in'] = False
+      flash('ERROR!!!!')
+      #return redirect(url_for('welcome'))
+      error = 'Invalid login details. Please try again.'
+      return render_template('login.html')
   else:
-   # session['logged_in'] = True
-   # flash('You were successfully logged in!') 
+    session['logged_in'] = True
+    flash('You were successfully logged in!') 
    # return redirect(url_for('welcome'))
     error = 'Invalid login details. Please try again.'
     return render_template('login.html')
@@ -68,7 +76,7 @@ def logout():
   return redirect(url_for('homepage'))
 
 def connect_db():
-  return sqlite3.connect(app.database)
+  return sqlite3.connect(app.database2)
 
 
 if __name__ == "__main__":
