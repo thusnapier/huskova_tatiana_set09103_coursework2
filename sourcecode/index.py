@@ -31,6 +31,13 @@ def welcome():
 # g.db.close()
   return render_template('logedin.html')
 
+@app.route('/welcome', methods=['POST'])
+def welcome_post():
+  text = request.form['text']
+  processed_text = text
+  return render_template('logedin.html', processed_text=processed_text)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   error = None

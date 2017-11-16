@@ -5,7 +5,13 @@
  <br>
  <h3>Share your story with the world and see what others shared with you.</h3>
  <br><br>
+ <form method="POST">
+   <input name="text">
+   <input type="submit">
+ </form>
+ <br><br>
  <h4>Posts:</h4>
+   {{ processed_text }} <br>
  {% for post in posts %}
    {{ post.auth }} <br>
    {{ post.stat }} <br>
