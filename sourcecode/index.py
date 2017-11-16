@@ -46,10 +46,6 @@ def welcome():
 def login():
   error = None
   if request.method == 'POST':
-  #Here connect to database
-  #Set variables to values passed in post
-  #Compare variables to database
-    #if request.form['username'] != 'cscott' or request.form['password'] != 'scotty':
     username = request.form['username']
     password = request.form['password']
     user = dbHandler.getUser(username, password)
@@ -58,14 +54,12 @@ def login():
       return redirect(url_for('welcome'))
     else:
       session['logged_in'] = False
-      flash('ERROR!!!!')
-      #return redirect(url_for('welcome'))
+      flash('Incorrect login details!')
       error = 'Invalid login details. Please try again.'
       return render_template('login.html')
   else:
     session['logged_in'] = True
     flash('You were successfully logged in!') 
-   # return redirect(url_for('welcome'))
     error = 'Invalid login details. Please try again.'
     return render_template('login.html')
      
@@ -79,6 +73,8 @@ def logout():
 def connect_db():
   return sqlite3.connect(app.database2)
 
+def connect_dab():
+  return sqlite3.connect(app.database1)
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
