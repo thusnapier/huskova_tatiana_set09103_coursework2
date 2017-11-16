@@ -3,13 +3,13 @@ import sqlite3
 with sqlite3.connect("texts.db") as connection:
   c = connection.cursor()
   c.execute("DROP TABLE IF EXISTS posts")
-  c.execute("CREATE TABLE posts(id FOREIGN KEY not null, auth TEXT not null, stat TEXT not null)")
-  c.execute('INSERT INTO posts VALUES("2", "Emily", "I get ignored")')
-  c.execute('INSERT INTO posts VALUES("1", "Jack", "my english teecher is a racist")')
+  c.execute("CREATE TABLE posts(auth TEXT not null, stat TEXT not null)")
+  c.execute('INSERT INTO posts VALUES("Emily", "I get ignored")')
+  c.execute('INSERT INTO posts VALUES("Jack", "my english teecher is a racist")')
 
 with sqlite3.connect("users.db") as connection:
   c = connection.cursor()
   c.execute("DROP TABLE IF EXISTS user")
-  c.execute("CREATE TABLE user(id FOREIGN KEY, username TEXT not null, password TEXT not null)")
-  c.execute('INSERT INTO user VALUES("1", "Jack", "jackie")')
-  c.execute('INSERT INTO user VALUES("2", "Emily", "emms")')
+  c.execute("CREATE TABLE user(username TEXT not null, password TEXT not null)")
+  c.execute('INSERT INTO user VALUES("Jack", "jackie")')
+  c.execute('INSERT INTO user VALUES("Emily", "emms")')

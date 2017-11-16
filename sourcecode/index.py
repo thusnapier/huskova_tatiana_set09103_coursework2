@@ -37,10 +37,10 @@ def welcome():
   else:
     session['logged_in']=True
     g.db = connect_dab()
-    cur = g.db.execute('SELECT * FROM posts')
-    posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
+    cur = g.db.execute('SELECT auth, stat FROM posts')
+    posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()] 
     g.db.close()
-    return render_template('logedin.html')
+    return render_template('logedin.html', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
