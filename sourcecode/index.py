@@ -29,6 +29,7 @@ def homepage():
 def welcome():
   if request.method == 'POST':
     text = request.form['text']
+    insname = request.form['insname']
     inserted_name = insname
     processed_text = text
     return render_template('logedin.html', processed_text=processed_text,
