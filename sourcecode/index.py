@@ -55,12 +55,9 @@ def login():
     else:
       session['logged_in'] = False
       flash('Incorrect login details!')
-      error = 'Invalid login details. Please try again.'
       return render_template('login.html')
   else:
-    session['logged_in'] = True
-    flash('You were successfully logged in!') 
-    error = 'Invalid login details. Please try again.'
+    session['logged_in'] = True 
     return render_template('login.html')
      
 @app.route('/logout')
