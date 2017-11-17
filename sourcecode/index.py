@@ -28,12 +28,16 @@ def homepage():
 @login_required
 def welcome():
   if request.method == 'POST':
+    g.db = connect_dab()
+    cur = g.db.execute('SELECT auth, stat FROM posts')
+    posts = [dict(auth=row[0], stat=row[1]) for row in cur.fetchall()]
     text = request.form['text']
     insname = request.form['insname']
     inserted_name = insname
     processed_text = text
+    g.db.close()
     return render_template('logedin.html', processed_text=processed_text,
-    inserted_name=inserted_name)
+    inserted_name=inserted_name, posts=posts)
   else:
     session['logged_in']=True
     g.db = connect_dab()
