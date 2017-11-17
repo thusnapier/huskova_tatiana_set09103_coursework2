@@ -6,10 +6,6 @@ def getUser(username, password):
   cur.execute("SELECT password FROM user WHERE username ='"+username+"'") 
   user = cur.fetchone()
   con.close()
-  print('---------------')
-  print(user)
-  print(username)
-  print(password)
   if password == user[0]:
    return True
   else:

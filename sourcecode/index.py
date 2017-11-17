@@ -35,9 +35,10 @@ def welcome():
     insname = request.form['insname']
     inserted_name = insname
     processed_text = text
+    inserted_text=dbHandler.sharePost(insname,text)
     g.db.close()
-    return render_template('logedin.html', processed_text=processed_text,
-    inserted_name=inserted_name, posts=posts)
+    return render_template('logedin.html',inserted_name=inserted_name,
+    processed_text=processed_text, insname=insname, text=text, posts=posts)
   else:
     session['logged_in']=True
     g.db = connect_dab()
