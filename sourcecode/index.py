@@ -2,12 +2,22 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from functools import wraps
 import sqlite3
 import models as dbHandler
+import bcrypt
 
 app = Flask(__name__)
 
 app.secret_key = "simon"
 app.database1 = "texts.db"
 app.database2 = "users.db"
+
+valid_username = 'username'
+valid_pwhash = bcrypt.hashpw('secretpass', bcrypt.gensalt())
+
+def check_auth(username, password):
+  if(username == valid_username and valid_pwhash ==
+  bcrypt.hashpw(password.encode('utf-8'), valid_pwhash)):
+    return True
+  return False
 
 #decorator that requires login before seeing the content
 def login_required(f):
