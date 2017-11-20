@@ -13,11 +13,11 @@ app.database2 = "users.db"
 valid_username = 'username'
 valid_pwhash = bcrypt.hashpw('secretpass', bcrypt.gensalt())
 
-def check_auth(username, password):
-  if(username == valid_username and valid_pwhash ==
-  bcrypt.hashpw(password.encode('utf-8'), valid_pwhash)):
-    return True
-  return False
+#def check_auth(form):
+#  if(valid_pwhash ==
+#  bcrypt.hashpw(form[1].encode('utf-8'), valid_pwhash)):
+#    return True
+#  return False
 
 #decorator that requires login before seeing the content
 def login_required(f):
@@ -58,6 +58,7 @@ def welcome():
     return render_template('logedin.html', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
+#@check_auth
 def login():
   error = None
   if request.method == 'POST':
