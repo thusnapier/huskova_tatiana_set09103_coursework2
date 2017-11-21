@@ -1,23 +1,15 @@
+#SET09103 Coursework2 by 40207956
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from functools import wraps
 import sqlite3
 import models as dbHandler
-#import bcrypt
 
 app = Flask(__name__)
 
+#import database and secret key from the app
 app.secret_key = "simon"
 app.database1 = "texts.db"
 app.database2 = "users.db"
-
-#valid_username = 'username'
-#valid_pwhash = bcrypt.hashpw('secretpass', bcrypt.gensalt())
-
-#def check_auth(form):
-#  if(valid_pwhash ==
-#  bcrypt.hashpw(form[1].encode('utf-8'), valid_pwhash)):
-#    return True
-#  return False
 
 #decorator that requires login before seeing the content
 def login_required(f):
@@ -38,6 +30,9 @@ def page_not_found(error):
 def homepage():
   return render_template('base.html')
 
+#when users logs in, they can see the content generated from the database
+#they are also allowed to write own posts
+#to see the page login is required
 @app.route('/welcome', methods=['GET','POST'])
 @login_required
 def welcome():
@@ -61,8 +56,9 @@ def welcome():
     g.db.close()
     return render_template('logedin.html', posts=posts)
 
+#connect to the database to retrieve users allowed to see the content
+#show flashin messages indicating the log status
 @app.route('/login', methods=['GET', 'POST'])
-#@check_auth
 def login():
   error = None
   if request.method == 'POST':
@@ -80,6 +76,9 @@ def login():
     session['logged_in'] = True 
     return render_template('login.html')
      
+#after loggin out redirect back to homepage
+#login is required to see the page
+#show flashing message to see the log status
 @app.route('/logout')
 @login_required
 def logout():
@@ -87,6 +86,7 @@ def logout():
   flash('You were logged out from the page.')
   return redirect(url_for('homepage'))
 
+#connectors to the database
 def connect_db():
   return sqlite3.connect(app.database2)
 
