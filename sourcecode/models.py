@@ -1,4 +1,5 @@
 import sqlite3 as sql
+import bcrypt
 
 def getUser(username, password):
   con = sql.connect("users.db")
@@ -6,7 +7,10 @@ def getUser(username, password):
   cur.execute("SELECT password FROM user WHERE username ='"+username+"'") 
   user = cur.fetchone()
   con.close()
-  if password == user[0]:
+  hashed = user[0]
+  password.encode('utf-8')
+  #if password == user[0]:
+  if bcrypt.checkpw(password, hashed):
    return True
   else:
    return False
