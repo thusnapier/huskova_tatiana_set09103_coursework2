@@ -1,6 +1,7 @@
 import sqlite3 as sql
 import bcrypt
 
+#get users from the database
 def getUser(username, password):
   con = sql.connect("users.db")
   cur  = con.cursor()
@@ -15,6 +16,7 @@ def getUser(username, password):
   else:
    return False
 
+#share post and send it itno the database
 def sharePost(auth, stat):
   con = sql.connect("texts.db")
   cur = con.cursor()
@@ -22,6 +24,7 @@ def sharePost(auth, stat):
   con.commit()
   con.close()
 
+#get posts from the database
 def getPost():
   con = sql.connect("texts.db")
   cur = con.cursor()
