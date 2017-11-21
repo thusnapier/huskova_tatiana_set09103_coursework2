@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from functools import wraps
 import sqlite3
 import models as dbHandler
-import bcrypt
+#import bcrypt
 
 app = Flask(__name__)
 
@@ -10,8 +10,8 @@ app.secret_key = "simon"
 app.database1 = "texts.db"
 app.database2 = "users.db"
 
-valid_username = 'username'
-valid_pwhash = bcrypt.hashpw('secretpass', bcrypt.gensalt())
+#valid_username = 'username'
+#valid_pwhash = bcrypt.hashpw('secretpass', bcrypt.gensalt())
 
 #def check_auth(form):
 #  if(valid_pwhash ==
@@ -29,6 +29,10 @@ def login_required(f):
       flash('Log in to see the content.')
       return redirect(url_for('login'))
   return wrap
+
+@app.errorhandler(404)
+def page_not_found(error):
+  return "Page not found", 404
 
 @app.route('/')
 def homepage():
